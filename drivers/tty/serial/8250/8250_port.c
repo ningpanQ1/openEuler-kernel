@@ -1013,6 +1013,7 @@ static void autoconfig_16550a(struct uart_8250_port *up)
 	    !(up->port.flags & UPF_FULL_PROBE))
 		return;
 
+	#if 0
 	/*
 	 * Check for presence of the EFR when DLAB is set.
 	 * Only ST16C650V1 UARTs pass this test.
@@ -1091,6 +1092,7 @@ static void autoconfig_16550a(struct uart_8250_port *up)
 			return;
 		}
 	}
+	#endif
 
 	/*
 	 * No EFR.  Try to detect a TI16750, which only sets bit 5 of
@@ -1373,7 +1375,8 @@ static void autoconfig_irq(struct uart_8250_port *up)
 		serial8250_out_MCR(up, UART_MCR_DTR | UART_MCR_RTS);
 	} else {
 		serial8250_out_MCR(up,
-			UART_MCR_DTR | UART_MCR_RTS | UART_MCR_OUT2);
+			//UART_MCR_DTR | UART_MCR_RTS | UART_MCR_OUT2);
+			UART_MCR_DTR | UART_MCR_RTS | UART_MCR_OUT2 | UART_MCR_LOOP);
 	}
 	serial_out(up, UART_IER, 0x0f);	/* enable all intrs */
 	serial_in(up, UART_LSR);
