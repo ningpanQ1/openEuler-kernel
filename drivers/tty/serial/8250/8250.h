@@ -189,8 +189,21 @@ static inline int serial8250_TIOCM_to_MCR(int tiocm)
 {
 	int mcr = 0;
 
-	if (tiocm & TIOCM_RTS)
-		mcr |= UART_MCR_RTS;
+//	if (tiocm & TIOCM_RTS)
+//		mcr |= UART_MCR_RTS;
+	/*
+	 * We can use port->line to check current serial port
+	 * e.g., ttyS3 => check port->line == 3
+	 *       ttyS0 => check port->line == 0
+	 */
+	if (port->line == 1) {
+		if (!(tiocm & TIOCM_RTS))
+			mcr |= UART_MCR_RTS;
+	} else {
+		if (tiocm & TIOCM_RTS)
+			mcr |= UART_MCR_RTS;
+	}
+
 	if (tiocm & TIOCM_DTR)
 		mcr |= UART_MCR_DTR;
 	if (tiocm & TIOCM_OUT1)
