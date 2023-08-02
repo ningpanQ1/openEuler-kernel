@@ -2528,6 +2528,7 @@ static int tty_tiocmset(struct tty_struct *tty, unsigned int cmd,
 	     unsigned __user *p)
 {
 	int retval;
+	int flag = 0;
 	unsigned int set, clear, val;
 
 	if (tty->ops->tiocmset == NULL)
@@ -2537,12 +2538,24 @@ static int tty_tiocmset(struct tty_struct *tty, unsigned int cmd,
 	if (retval)
 		return retval;
 	set = clear = 0;
+
+	if (!strncmp(tty->name, "ttyS1", 5))
+		flag = 1;
+
 	switch (cmd) {
 	case TIOCMBIS:
 		set = val;
+		if ((set & TIOCM_RTS) && flag) {
+			set &= ~TIOCM_RTS;
+			clear |= TIOCM_RTS;
+		}
 		break;
 	case TIOCMBIC:
 		clear = val;
+		if ((clear & TIOCM_RTS) && flag) {
+			clear &= ~TIOCM_RTS;
+			set |= TIOCM_RTS;
+		}
 		break;
 	case TIOCMSET:
 		set = val;
