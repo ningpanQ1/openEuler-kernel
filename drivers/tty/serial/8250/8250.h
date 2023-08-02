@@ -197,8 +197,8 @@ static inline int serial8250_TIOCM_to_MCR(int tiocm)
 		mcr |= UART_MCR_OUT1;
 	if (tiocm & TIOCM_OUT2)
 		mcr |= UART_MCR_OUT2;
-	if (tiocm & TIOCM_LOOP)
-		mcr |= UART_MCR_LOOP;
+//	if (tiocm & TIOCM_LOOP)
+//		mcr |= UART_MCR_LOOP;
 
 	return mcr;
 }
