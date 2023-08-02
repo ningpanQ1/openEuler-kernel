@@ -162,10 +162,12 @@ uart_update_mctrl(struct uart_port *port, unsigned int set, unsigned int clear)
 
 static void uart_port_dtr_rts(struct uart_port *uport, int raise)
 {
-	if (raise)
-		uart_set_mctrl(uport, TIOCM_DTR | TIOCM_RTS);
-	else
-		uart_clear_mctrl(uport, TIOCM_DTR | TIOCM_RTS);
+	if (uport->line != 1) {
+		if (raise)
+			uart_set_mctrl(uport, TIOCM_DTR | TIOCM_RTS);
+		else
+			uart_clear_mctrl(uport, TIOCM_DTR | TIOCM_RTS);
+	}
 }
 
 /*
@@ -229,7 +231,7 @@ static int uart_port_startup(struct tty_struct *tty, struct uart_state *state,
 		 * Setup the RTS and DTR signals once the
 		 * port is open and ready to respond.
 		 */
-		if (init_hw && C_BAUD(tty))
+		if (init_hw && (uport->line != 1) && C_BAUD(tty))
 			uart_port_dtr_rts(uport, 1);
 	}
 
