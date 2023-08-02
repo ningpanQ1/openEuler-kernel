@@ -472,7 +472,10 @@ serial_pnp_probe(struct pnp_dev *dev, const struct pnp_device_id *dev_id)
 		uart.port.type = PORT_8250_CIR;
 	}
 
-	uart.port.flags |= UPF_SKIP_TEST | UPF_BOOT_AUTOCONF;
+	//uart.port.flags |= UPF_SKIP_TEST | UPF_BOOT_AUTOCONF;
+    uart.port.flags |= UPF_SKIP_TEST | UPF_BOOT_AUTOCONF | UPF_FIXED_PORT
+			| UPF_FIXED_TYPE;
+	uart.port.type = PORT_16550A;
 	if (pnp_irq_flags(dev, 0) & IORESOURCE_IRQ_SHAREABLE)
 		uart.port.flags |= UPF_SHARE_IRQ;
 	uart.port.uartclk = 1843200;
