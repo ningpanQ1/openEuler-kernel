@@ -191,19 +191,6 @@ static inline int serial8250_TIOCM_to_MCR(int tiocm)
 
 //	if (tiocm & TIOCM_RTS)
 //		mcr |= UART_MCR_RTS;
-	/*
-	 * We can use port->line to check current serial port
-	 * e.g., ttyS3 => check port->line == 3
-	 *       ttyS0 => check port->line == 0
-	 */
-	if (port->line == 1) {
-		if (!(tiocm & TIOCM_RTS))
-			mcr |= UART_MCR_RTS;
-	} else {
-		if (tiocm & TIOCM_RTS)
-			mcr |= UART_MCR_RTS;
-	}
-
 	if (tiocm & TIOCM_DTR)
 		mcr |= UART_MCR_DTR;
 	if (tiocm & TIOCM_OUT1)
@@ -270,6 +257,20 @@ static inline int serial8250_in_MCR(struct uart_8250_port *up)
 
 		mctrl_gpio = mctrl_gpio_get_outputs(up->gpios, &mctrl_gpio);
 		mctrl |= serial8250_TIOCM_to_MCR(mctrl_gpio);
+		#if 1
+		/*
+		 * We can use port->line to check current serial port
+		 * e.g., ttyS3 => check port->line == 3
+		 *       ttyS0 => check port->line == 0
+		 */
+		if (up->port.line == 1) {
+			if (!(mctrl_gpio & TIOCM_RTS))
+				mctrl |= UART_MCR_RTS;
+		} else {
+			if (mctrl_gpio & TIOCM_RTS)
+				mctrl |= UART_MCR_RTS;
+		}
+		#endif
 	}
 
 	return mctrl;

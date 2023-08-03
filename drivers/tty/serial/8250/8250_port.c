@@ -2016,6 +2016,20 @@ void serial8250_do_set_mctrl(struct uart_port *port, unsigned int mctrl)
 	unsigned char mcr;
 
 	mcr = serial8250_TIOCM_to_MCR(mctrl);
+	#if 1
+	/*
+	 * We can use port->line to check current serial port
+	 * e.g., ttyS3 => check port->line == 3
+	 *       ttyS0 => check port->line == 0
+	 */
+	if (port->line == 1) {
+		if (!(mctrl & TIOCM_RTS))
+			mcr |= UART_MCR_RTS;
+	} else {
+		if (mctrl & TIOCM_RTS)
+			mcr |= UART_MCR_RTS;
+	}
+	#endif
 
 	mcr = (mcr & up->mcr_mask) | up->mcr_force | up->mcr;
 
