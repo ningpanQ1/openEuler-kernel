@@ -546,6 +546,8 @@ static bool valleyview_crt_detect_hotplug(struct drm_connector *connector)
 	if (reenable_hpd)
 		intel_hpd_enable(dev_priv, crt->base.hpd_pin);
 
+	ret = true;//yuechao
+
 	return ret;
 }
 
