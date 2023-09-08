@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config ADVANTECH_PNAME
+	bool "Driver for ADVANTECH Devices Detect"
+	default y
+	help
+	  This diriver is for acquire BIOS information about Advantech device product and board name.
