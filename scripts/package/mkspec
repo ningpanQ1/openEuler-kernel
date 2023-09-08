@@ -30,8 +30,32 @@ fi
 PROVIDES="$PROVIDES kernel-$KERNELRELEASE"
 __KERNELRELEASE=$(echo $KERNELRELEASE | sed -e "s/-/_/g")
 EXCLUDES="$RCS_TAR_IGNORE --exclude=*vmlinux* --exclude=*.mod \
---exclude=*.o --exclude=*.ko --exclude=*.cmd --exclude=Documentation \
---exclude=.config.old --exclude=.missing-syscalls.d --exclude=*.s"
+--exclude=*.o --exclude=*.o.d --exclude=*.gitignore --exclude=*.ko --exclude=*.ko.xz --exclude=*.cmd --exclude=Documentation \
+--exclude=.config.old --exclude=.missing-syscalls.d --exclude=*.s \
+--exclude=COPYING --exclude=*.order --exclude=*.a \
+--exclude=arch/*.c  --exclude=arch/alpha/*.h --exclude=arch/arc/*.h  --exclude=arch/arm/*.h --exclude=arch/arm64/*.h --exclude=arch/c6x/*.h --exclude=arch/csky/*.h --exclude=arch/h8300/*.h \
+--exclude=arch/hexagon/*.h --exclude=arch/ia64/*.h --exclude=arch/loongarch/*.h --exclude=arch/m68k/*.h --exclude=arch/microblaze/*.h --exclude=arch/mips/*.h --exclude=arch/nds32/*.h \
+--exclude=arch/openrisc/*.h --exclude=arch/parisc/*.h --exclude=arch/powerpc/*.h --exclude=arch/riscv/*.h --exclude=arch/s390/*.h --exclude=arch/sh/*.h \
+--exclude=arch/sparc/*.h --exclude=arch/sw_64/*.h --exclude=arch/um/*.h --exclude=arch/xtensa/*.h --exclude=arch/nios2/*.h \
+--exclude=drivers/*.c --exclude=drivers/*.h \
+--exclude=crypto/*.c --exclude=crypto/*.h \
+--exclude=kernel/*.c --exclude=kernel/*.h \
+--exclude=fs/*.c --exclude=fs/*.h \
+--exclude=tools/*.c --exclude=tools/*.h \
+--exclude=lib/*.c --exclude=lib/*.h \
+--exclude=ipc/*.c --exclude=ipc/*.h \
+--exclude=sound/*.c --exclude=sound/*.h \
+--exclude=net/*.c --exclude=net/*.h \
+--exclude=init/*.c --exclude=init/*.h \
+--exclude=io_uring/*.c --exclude=io_uring/*.h \
+--exclude=security/*.c --exclude=security/*.h \
+--exclude=mm/*.c --exclude=mm/*.h \
+--exclude=samples/*.c --exclude=samples/*.h \
+--exclude=virt/*.c --exclude=virt/*.h \
+--exclude=certs/*.c --exclude=certs/*.h \
+--exclude=usr/*.c --exclude=usr/*.h \
+--exclude=block/*.c --exclude=block/*.h \
+--exclude=modules.builtin --exclude=modules.builtin.modinfo"
 
 # We can label the here-doc lines for conditional output to the spec file
 #
